@@ -20,7 +20,6 @@ export default new Proxy({}, {
         return localForageWrapper[name].apply(localForageWrapper, args);
       }
       const fnData = { args, fn: name };
-      console.log('Request', fnData);
       return Bridge.sendMessage(BRIDGE_LOCALFORAGE_FN, fnData, 'window');
     }
   }

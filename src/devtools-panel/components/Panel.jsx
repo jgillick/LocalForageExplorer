@@ -31,9 +31,7 @@ export default function Panel() {
    */
   async function loadData() {
     try {
-      console.log('Get data?');
       const storeData = await remoteLocalForage.getData(instanceName);
-      console.log('Return', storeData);
       const dataMap = new Map();
 
       // Use a map to maintain order
