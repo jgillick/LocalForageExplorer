@@ -1,0 +1,29 @@
+{
+  "manifest_version": 2,
+  "name": "LocalForage Explorer",
+  "description": "A chrome extension for viewing/editing localforage data stores.",
+  "author": "Jeremy Gillick",
+  "version": "1.0.0",
+  "version_name": "1.0.0",
+  "devtools_page": "devtools-panel/index.html",
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content-script/index.js"],
+      "run_at": "document_idle"
+    }
+  ],
+  "background": {
+    "scripts": ["background.js"],
+    "persistent": true
+  },
+
+  "content_security_policy": "default-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-eval';  connect-src *; frame-src *;",
+  "web_accessible_resources": [ "*" ],
+  "icons": {
+    "16": "images/logo16.png",
+    "32": "images/logo32.png",
+    "48": "images/logo48.png",
+    "128": "images/logo128.png"
+  }
+}
