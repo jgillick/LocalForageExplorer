@@ -32,7 +32,7 @@ export default css.global`
     --modal-actions-background: #e0e0e0;
     --modal-button-color: #fff;
     --modal-button-background: #246dce;
-    --modal-button-border: #242424;
+    --modal-button-border: #246dce;
     --modal-button-hover-border: #5a5a5a;
     --modal-button-focus-border: #0f639d;
   }

@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
 import {Column, Table, AutoSizer, ArrowKeyStepper} from 'react-virtualized';
-import colors from '../../styles/colors';
 
 import EditableCell from './EditableCell';
 
@@ -287,7 +286,6 @@ export default function({ rows, onChange, removeItem, instanceName, filteredBy }
           )}
         </AutoSizer>
       </section>
-      <style jsx>{colors}</style>
       <style jsx>{`
         section {
           position: absolute;

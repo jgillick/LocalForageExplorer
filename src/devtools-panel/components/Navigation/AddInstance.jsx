@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
 import remoteLocalForage from '../../modules/remoteLocalForage';
-import colors from '../../styles/colors';
 
 /**
  * Modal used to add a LocalForage instance to the panel.
@@ -84,7 +83,6 @@ export default function AddInstance({ show, handleClose }) {
           <button onClick={() => handleClose(null)}>Cancel</button>
         </footer>
       </section>
-      <style jsx>{colors}</style>
       <style jsx>{`
           .container {
             display: none;

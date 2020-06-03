@@ -1,5 +1,4 @@
 import React, { useRef, useState, useEffect } from 'react';
-import colors from '../../styles/colors';
 
 /**
  * Creates a table cell that is editable when double clicked
@@ -123,7 +122,6 @@ export default function EditableCell({
           {fieldValue}
         </span>
       }
-      <style jsx>{colors}</style>
       <style jsx>{`
         input {
           border: none;

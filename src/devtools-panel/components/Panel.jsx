@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Bridge from 'crx-bridge';
 import remoteLocalForage from '../modules/remoteLocalForage';
-import { BRIDGE_NEW_SEARCH, BRIDGE_CLEAR_SEARCH } from '../../constants';
+import { BRIDGE_NEW_SEARCH, BRIDGE_CLEAR_SEARCH, BRIDGE_PAGE_LOAD } from '../../constants';
 import colors from '../styles/colors';
 
 import Navigation from './Navigation';
@@ -146,6 +146,9 @@ export default function Panel() {
     });
     Bridge.onMessage(BRIDGE_CLEAR_SEARCH, () => {
       setFilterValue('');
+    });
+    Bridge.onMessage(BRIDGE_PAGE_LOAD, () => {
+      loadData();
     });
   }, []);
 

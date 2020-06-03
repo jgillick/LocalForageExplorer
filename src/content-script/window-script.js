@@ -2,9 +2,9 @@
  * A script injected into the page and used to connect the extension
  * to the page's localforage instance.
  */
-(function() {
+(async function() {
   // import these here so they stay isolated from the page
-  const { BRIDGE_NAMESPACE, BRIDGE_LOCALFORAGE_FN } = require('../constants.js');
+  const { BRIDGE_NAMESPACE, BRIDGE_LOCALFORAGE_FN, BRIDGE_PAGE_LOAD } = require('../constants.js');
   const Bridge = require('crx-bridge').default;
   const LFWrapper = require('./LocalForageWrapper').default;
   const localForageWrapper = new LFWrapper();
@@ -20,4 +20,11 @@
     }
     return localForageWrapper[fn].apply(localForageWrapper, args);
   });
+
+  // Tell the dev panel that the page has loaded
+  try {
+    await Bridge.sendMessage(BRIDGE_PAGE_LOAD, {}, 'devtools');
+  } catch(e) {
+    // An error is thrown if the devtools panel is not open yet
+  }
 })();
