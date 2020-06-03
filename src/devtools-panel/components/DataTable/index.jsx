@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import {Column, Table, AutoSizer, ArrowKeyStepper} from 'react-virtualized';
+import colors from '../../styles/colors';
 
 import EditableCell from './EditableCell';
 
@@ -84,12 +85,16 @@ export default function({ rows, onChange, removeItem, instanceName, filteredBy }
     switch (evt.key) {
       // Delete selected row
       case 'Backspace':
+      case 'Delete':
         if (row && typeof removeItem === 'function') {
           removeItem(row.key);
         }
+        break;
       // Edit row
       case 'Enter':
         editSelectedRow();
+        break;
+
     }
   }
 
@@ -282,6 +287,7 @@ export default function({ rows, onChange, removeItem, instanceName, filteredBy }
           )}
         </AutoSizer>
       </section>
+      <style jsx>{colors}</style>
       <style jsx>{`
         section {
           position: absolute;
@@ -290,8 +296,10 @@ export default function({ rows, onChange, removeItem, instanceName, filteredBy }
           left: 0;
           right: 0;
           bottom: 0;
+          border-top: 2px solid var(--border-color);
         }
         section :global(.ReactVirtualized__Table__Grid) {
+          background: var(--table-background);
           outline: none;
         }
         section :global(.ReactVirtualized__Table__headerTruncatedText) {
@@ -303,6 +311,8 @@ export default function({ rows, onChange, removeItem, instanceName, filteredBy }
         }
         section :global(.ReactVirtualized__Table__headerRow) {
           line-height: 20px;
+          background: var(--table-header-background);
+          border-bottom: 1px solid var(--border-color);
         }
         section :global(.ReactVirtualized__Table__headerColumn) {
           margin: 0;
@@ -313,54 +323,23 @@ export default function({ rows, onChange, removeItem, instanceName, filteredBy }
         section :global(.ReactVirtualized__Table__rowColumn) {
           margin: 0;
         }
-
-        /* Light mode */
-        section {
-          background: #fff;
-          border-top: 2px solid #aaa;
-        }
-        section :global(.ReactVirtualized__Table__headerRow) {
-          background: #f3f3f3;
-          border-bottom: 1px solid #aaa;
-        }
         section :global(.ReactVirtualized__Table__headerColumn),
-        section :global(.ReactVirtualized__Table__row) {
-          border-right: 1px solid #aaa;
+        section :global(.ReactVirtualized__Table__rowColumn) {
+          border-right: 1px solid var(--border-color);
         }
         section :global(.ReactVirtualized__Table__headerColumn):last-child,
-        section :global(.ReactVirtualized__Table__row):last-child {
+        section :global(.ReactVirtualized__Table__rowColumn):last-child {
           border-right: none;
         }
         section :global(.ReactVirtualized__Table__row.even) {
-          background-color: #f2f7fe;
+          background-color: var(--table-row-even-background);
+        }
+        section :global(.ReactVirtualized__Table__row.odd) {
+          background-color: var(--table-row-odd-background);
         }
         section :global(.ReactVirtualized__Table__row.selected-row) {
-          color: #fff;
-          background-color: #1b73e8;
-        }
-        /* Dark mode */
-        @media (prefers-color-scheme: dark) {
-          section {
-            background: #242424;
-            border-top: 2px solid #3d3d3d;
-          }
-          section :global(.ReactVirtualized__Table__headerRow) {
-            background: #333;
-            border-bottom: 1px solid #555;
-          }
-          section :global(.ReactVirtualized__Table__headerColumn):first-child,
-          section :global(.key-column) {
-            border-right: 1px solid #555;
-          }
-          section :global(.ReactVirtualized__Table__row.odd) {
-            background-color: #333;
-          }
-          section :global(.ReactVirtualized__Table__row.even) {
-            background-color: #0b2544;
-          }
-          section :global(.ReactVirtualized__Table__row.selected-row) {
-            background-color: #0f639d;
-          }
+          color: var(--table-row-selected-color);
+          background-color: var(--table-row-selected-background);
         }
       `}</style>
     </>

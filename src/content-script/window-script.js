@@ -19,5 +19,5 @@
       throw new Error(`Function '${fn}' doesn't exist on LocalForageWrapper`);
     }
     return localForageWrapper[fn].apply(localForageWrapper, args);
-  })
+  });
 })();

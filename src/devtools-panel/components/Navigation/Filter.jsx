@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { MdAddCircle } from "react-icons/md";
-import { button, input } from '../styles';
+import { iconButton, input } from '../../styles/controls';
 
 /**
  * Reload button
@@ -52,13 +52,13 @@ export default function Filter({
             onKeyDown={onKeyPress}
           />
           {value && (
-            <button className="clear" onClick={clearValue}>
+            <button className="clear icon-button" onClick={clearValue}>
               <MdAddCircle />
             </button>
           )}
         </div>
       </div>
-      <style jsx>{button}</style>
+      <style jsx>{iconButton}</style>
       <style jsx>{input}</style>
       <style jsx>{`
         div {
@@ -77,7 +77,7 @@ export default function Filter({
           position: absolute;
           top: 2px;
           right: 2px;
-          color: #d2d2d2;
+          color: var(--input-clear-btn-color);
         }
         .clear :global(svg) {
           transform: rotate(45deg);
@@ -86,13 +86,6 @@ export default function Filter({
           height: 20px;
           width: 100%;
           padding: 4px 20px 4px 3px;
-        }
-
-        /* Dark mode */
-        @media (prefers-color-scheme: dark) {
-          .clear {
-            color: #8f8f8f;
-          }
         }
       `}</style>
     </>

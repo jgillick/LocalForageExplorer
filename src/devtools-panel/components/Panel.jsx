@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from 'react';
+import Bridge from 'crx-bridge';
 import remoteLocalForage from '../modules/remoteLocalForage';
+import { BRIDGE_NEW_SEARCH, BRIDGE_CLEAR_SEARCH } from '../../constants';
+import colors from '../styles/colors';
 
 import Navigation from './Navigation';
 import DataTable from './DataTable';
@@ -19,9 +22,21 @@ export default function Panel() {
       return;
     }
 
-    const search = filterValue.trim().toLowerCase();
+    // Normalize a text value for the search
+    const normVal = (val) => {
+      let normed = val;
+      if (normed === null || normed === 'undefined') {
+        normed = '';
+      } else if (typeof normed !== 'string') {
+        normed = JSON.stringify(normed);
+      }
+      return normed.toLowerCase();
+    }
+
+    const search = normVal(filterValue).trim();
     const filtered = rowData.filter(({ key, value }) => {
-      return (key.toLowerCase().includes(search) || value.includes(search));
+      // const valueStr = value;
+      return (normVal(key).includes(search) || normVal(value).includes(search));
     });
     setFilteredRows(filtered);
   }
@@ -39,21 +54,21 @@ export default function Panel() {
         dataMap.set(item.key, item.value);
       });
 
-      // Add elements
-      Object.entries(storeData).forEach(([key, rawValue]) => {
-        let value = rawValue;
-        if (typeof value !== 'string' && typeof value !== 'number') {
-          value = JSON.stringify(value);
-        }
+      // Add new elements
+      Object.entries(storeData).forEach(([key, value]) => {
         dataMap.set(key, value);
       });
 
-      // Export to array
+      // Export to array and pull values directly from storeData (most up-to-date)
       // Remove elements not included in store data
       const dataArr = [];
-      dataMap.forEach((value, key) => {
+      dataMap.forEach((_v, key) => {
         if (typeof storeData[key] !== 'undefined') {
-          dataArr.push({ key, value: storeData[key] });
+          let value = storeData[key];
+          if (typeof value !== 'string' && typeof value !== 'number') {
+            value = JSON.stringify(value);
+          }
+          dataArr.push({ key, value });
         }
       });
 
@@ -121,6 +136,19 @@ export default function Panel() {
     filterRows();
   }, [filterValue, rowData])
 
+  /**
+   * Listen for  extension panel searches
+   */
+  useEffect(() => {
+    Bridge.onMessage(BRIDGE_NEW_SEARCH, ({ data }) => {
+      const { query } = data;
+      setFilterValue(query || '');
+    });
+    Bridge.onMessage(BRIDGE_CLEAR_SEARCH, () => {
+      setFilterValue('');
+    });
+  }, []);
+
   return (
     <>
       <div className="panel-container">
@@ -137,26 +165,15 @@ export default function Panel() {
           filteredBy={filterValue}
           instanceName={instanceName} />
       </div>
+      <style jsx>{colors}</style>
       <style jsx>{`
         .panel-container {
           font-size: 12px;
           font-family: Roboto;
           padding: 0;
           margin: 0;
-        }
-
-        /* Light mode */
-        .panel-container {
-          color: #303942;
-          background: #f3f3f3;
-        }
-        /* Dark mode */
-        @media (prefers-color-scheme: dark) {
-          .panel-container {
-            color: #bec6cf;
-            background: #333;
-          }
-
+          color: var(--color);
+          background: var(--background);
         }
       `}</style>
     </>

@@ -1,12 +1,28 @@
 import React, { useState, useEffect } from 'react';
 import { MdAddCircle } from "react-icons/md";
 
+import AddInstance from './AddInstance';
 import remoteLocalForage from '../../modules/remoteLocalForage';
-import { button, input } from '../styles';
+import { iconButton, input } from '../../styles/controls';
 
 export default function InstanceSelector({ setInstanceName }) {
   const [ instances, setInstances ] = useState([]);
   const [ selected, setSelected ] = useState(null);
+  const [ showAddModal, setShowAddModal ] = useState(false);
+  const openModal = () => setShowAddModal(true);
+
+  /**
+   * Close the add modal
+   * @param {boolean} instName - The name of the new instance.
+   */
+  function closeModal(instName) {
+    setShowAddModal(false);
+    if (instName) {
+      setSelected(instName);
+      setInstanceName(instName);
+      loadInstances();
+    }
+  }
 
   /**
    * Load instances
@@ -15,23 +31,6 @@ export default function InstanceSelector({ setInstanceName }) {
     const list = await remoteLocalForage.getCustomInstances();
     list.sort();
     setInstances(list);
-  }
-
-  /**
-   * Create new localforage instance
-   */
-  async function createInstance() {
-    let name = prompt('New instance name?');
-    if (name === null || name.trim() === '') {
-      return;
-    }
-
-    name = name.trim();
-    await remoteLocalForage.createCustomInstance(name);
-
-    setSelected(name);
-    setInstanceName(name);
-    loadInstances();
   }
 
   /**
@@ -64,11 +63,12 @@ export default function InstanceSelector({ setInstanceName }) {
             </option>
           ))}
         </select>
-        <button>
-          <MdAddCircle onClick={createInstance} />
+        <button className="icon-button">
+          <MdAddCircle onClick={openModal} />
         </button>
       </div>
-      <style jsx>{button}</style>
+      <AddInstance show={showAddModal} handleClose={closeModal} />
+      <style jsx>{iconButton}</style>
       <style jsx>{input}</style>
       <style jsx>{`
         div {
@@ -80,8 +80,8 @@ export default function InstanceSelector({ setInstanceName }) {
         select option.default {
           font-style: italic;
         }
-        button,
-        button:active {
+        .icon-button,
+        .icon-button:active {
           margin-left: 5px;
         }
       `}</style>

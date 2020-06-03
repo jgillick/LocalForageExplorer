@@ -4,9 +4,11 @@
   "description": "A chrome extension for viewing/editing localforage data stores.",
   "main": "index.js",
   "scripts": {
-    "serve": "WEB_SERVER=1 parcel src/devtools-panel/panel.html --no-cache",
+    "clean": "rm -rf dist .cache localforage-explorer.zip",
+    "start": "WEB_SERVER=1 parcel src/devtools-panel/panel.html --no-cache",
     "watch": "parcel watch src/* src/**/* --no-hmr --no-cache",
-    "build": "parcel build src/* src/**/* --no-cache --no-source-maps"
+    "build": "parcel build src/* src/**/* --no-cache --no-source-maps",
+    "dist": "npm run clean && npm run build && zip -r localforage-explorer.zip ./dist"
   },
   "author": "Jeremy Gillick",
   "license": "MIT",
