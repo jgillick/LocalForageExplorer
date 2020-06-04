@@ -1,5 +1,5 @@
 # LocalForage Explorer Chrome Extension
-A chrome extension for viewing/editing [localforage](https://github.com/localForage/localForage) data stores in the devtools.
+A chrome extension for viewing, editing, and adding to [localforage](https://github.com/localForage/localForage) data stores in a new devtools panel. Even if your bundler does not attach `localforage` to the window object, this extension works just fine by using it's own copy.
 
 <img src="./screenshot.png" alt="Screenshot" width="400" />
 
