@@ -8,7 +8,7 @@
     "start": "parcel src/devtools-panel/app.html --no-cache",
     "watch": "parcel watch src/* src/**/* --no-hmr --no-cache",
     "build": "parcel build src/* src/**/* --no-cache --no-source-maps",
-    "zip": "npm run clean && npm run build && zip -r localforage-explorer.zip ./dist",
+    "zip": "npm run clean && npm run build && pushd dist && zip -r ../localforage-explorer.zip . && popd",
     "firefox": "npm run build && web-ext run -s dist"
   },
   "author": "Jeremy Gillick",

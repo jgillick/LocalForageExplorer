@@ -1,7 +1,8 @@
 # LocalForage Extension for Chrome and Firefox
-An extension for viewing, editing, and adding to [localforage](https://github.com/localForage/localForage) data stores in a new devtools panel. Even if the site does not attach `localforage` to the window object, this extension works just fine by using it's own copy.
+An extension for viewing, editing, and adding to [localforage](https://github.com/localForage/localForage) data stores in a new devtools panel. Even if the site does not attach `localforage` to the window object, this extension works just fine by using its own copy.
 
 <img src="./screenshot.png" alt="Screenshot" width="400" />
+
 
 ## General Usage
 
