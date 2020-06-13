@@ -70,6 +70,7 @@ export default function Filter({
         }
         .compount-field {
           width: 100%;
+          height: 100%;
           max-width: 200px;
           position: relative;
         }
@@ -83,9 +84,10 @@ export default function Filter({
           transform: rotate(45deg);
         }
         input {
-          height: 20px;
           width: 100%;
+          height: 100%;
           padding: 4px 20px 4px 3px;
+          box-sizing: border-box;
         }
       `}</style>
     </>

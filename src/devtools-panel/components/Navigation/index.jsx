@@ -5,7 +5,10 @@ import InstanceSelector from './InstanceSelector';
 
 export default function Navigation({
   reload,
+  instances,
+  addInstance,
   setInstanceName,
+  selectedInstance,
   filterValue,
   onFilterChange,
 }) {
@@ -14,11 +17,18 @@ export default function Navigation({
       <nav>
         <Reload reload={reload} />
         <Filter value={filterValue} onChange={onFilterChange} />
-        <InstanceSelector setInstanceName={setInstanceName} />
+        <InstanceSelector
+          instances={instances}
+          setInstanceName={setInstanceName}
+          addInstance={addInstance}
+          selectedInstance={selectedInstance}
+        />
       </nav>
       <style jsx>{`
         nav {
-          padding: 5px 10px;
+          height: 30px;
+          padding: 3px 10px;
+          box-sizing: border-box;
           display: flex;
           align-items: center;
           justify-content: space-between;

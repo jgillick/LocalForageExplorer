@@ -2,10 +2,13 @@ import Bridge from 'crx-bridge';
 import { BRIDGE_LOCALFORAGE_FN } from '../../constants.js';
 import LocalForageWrapper from '../../content-script/LocalForageWrapper';
 
-// Local developement, connect directly to it
-let localForageWrapper;
-if (process.env.WEB_SERVER) {
-  localForageWrapper = new LocalForageWrapper();
+let localForageWrapper = new LocalForageWrapper();
+
+/**
+ * Connect to the remote localForage instance through crx-bridge.
+ */
+export function connectToRemoteLocalForage() {
+  localForageWrapper = null;
 }
 
 /**
@@ -14,13 +17,14 @@ if (process.env.WEB_SERVER) {
  */
 export default new Proxy({}, {
   get(_target, name) {
+    // Return function to call
     return (...args) => {
-      // Local developement, connect directly to it
-      if (process.env.WEB_SERVER) {
+      // Use local version
+      if (localForageWrapper) {
         return localForageWrapper[name].apply(localForageWrapper, args);
       }
       const fnData = { args, fn: name };
       return Bridge.sendMessage(BRIDGE_LOCALFORAGE_FN, fnData, 'window');
     }
-  }
+  },
 });

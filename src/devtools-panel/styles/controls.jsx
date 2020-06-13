@@ -12,6 +12,9 @@ export const iconButton = css`
     outline: none;
     font-size: 16px;
     border-radius: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
   .icon-button:hover {
     color: var(--icon-button-hover-color);
@@ -26,7 +29,6 @@ export const iconButton = css`
 `;
 
 export const input = css`
-  {colors}
   input,
   select {
     color: var(--input-color);
@@ -43,5 +45,11 @@ export const input = css`
   select:focus {
     border-color: var(--input-hover-border);
     outline: none;
+  }
+
+  /* Remove dotted focus ring in Firefox. */
+  select:-moz-focusring {
+    color: transparent;
+    text-shadow: 0 0 0 #000;
   }
 `

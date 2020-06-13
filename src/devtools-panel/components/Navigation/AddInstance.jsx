@@ -1,10 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
-import remoteLocalForage from '../../modules/remoteLocalForage';
 
 /**
  * Modal used to add a LocalForage instance to the panel.
  */
-export default function AddInstance({ show, handleClose }) {
+export default function AddInstance({ show, addInstance, handleClose }) {
   const [ value, setValue ] = useState('');
   const [ canSubmit, setCanSubmit ] = useState(false);
   const inputField = useRef();
@@ -32,7 +31,7 @@ export default function AddInstance({ show, handleClose }) {
     try {
       let name = value.trim();
       if (name === '') return;
-      await remoteLocalForage.createCustomInstance(name);
+      await addInstance(name);
       handleClose(name);
     } catch(e) {
       alert(`An error occurred!\n${e.toString()}`);

@@ -96,6 +96,7 @@ export default function EditableCell({
         commitChange();
         break;
       case 'Escape':
+      case 'Esc':
         setEditable(false);
         break;
       case 'Tab':
@@ -142,7 +143,10 @@ export default function EditableCell({
         input,
         .display {
           padding: 0 10px;
-          height: 100%;
+          line-height: 30px;
+          overflow: hidden;
+          width: 100%;
+          height: 30px;
         }
       `}</style>
     </>

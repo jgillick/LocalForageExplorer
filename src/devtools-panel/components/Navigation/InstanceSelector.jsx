@@ -1,13 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { MdAddCircle } from "react-icons/md";
 
-import AddInstance from './AddInstance';
+import AddInstanceModal from './AddInstance';
 import remoteLocalForage from '../../modules/remoteLocalForage';
 import { iconButton, input } from '../../styles/controls';
 
-export default function InstanceSelector({ setInstanceName }) {
-  const [ instances, setInstances ] = useState([]);
-  const [ selected, setSelected ] = useState(null);
+export default function InstanceSelector({ setInstanceName, addInstance, instances, selectedInstance }) {
   const [ showAddModal, setShowAddModal ] = useState(false);
   const openModal = () => setShowAddModal(true);
 
@@ -18,19 +16,8 @@ export default function InstanceSelector({ setInstanceName }) {
   function closeModal(instName) {
     setShowAddModal(false);
     if (instName) {
-      setSelected(instName);
       setInstanceName(instName);
-      loadInstances();
     }
-  }
-
-  /**
-   * Load instances
-   */
-  async function loadInstances() {
-    const list = await remoteLocalForage.getCustomInstances();
-    list.sort();
-    setInstances(list);
   }
 
   /**
@@ -38,15 +25,10 @@ export default function InstanceSelector({ setInstanceName }) {
    */
   function onChange(event) {
     const name = event.target.value;
-    setSelected(name);
     if (typeof setInstanceName === 'function') {
       setInstanceName(name);
     }
   }
-
-  useEffect(() => {
-    loadInstances();
-  }, []);
 
   return (
     <>
@@ -54,7 +36,7 @@ export default function InstanceSelector({ setInstanceName }) {
         <select
           title="LocalForage Instances"
           onChange={onChange}
-          value={selected || ''}
+          value={selectedInstance || ''}
         >
           <option value="" className="default">Default</option>
           {instances.map((name) => (
@@ -67,22 +49,27 @@ export default function InstanceSelector({ setInstanceName }) {
           <MdAddCircle onClick={openModal} />
         </button>
       </div>
-      <AddInstance show={showAddModal} handleClose={closeModal} />
+      <AddInstanceModal
+        show={showAddModal}
+        handleClose={closeModal}
+        addInstance={addInstance}
+      />
       <style jsx>{iconButton}</style>
       <style jsx>{input}</style>
       <style jsx>{`
         div {
           display: flex;
-          align-items: center;
           justify-content: flex-end;
           max-width: 200px;
         }
-        select option.default {
-          font-style: italic;
+        select {
+          -moz-appearance: none;
+          border-radius: 5px;
+          padding: 0 5px;
         }
         .icon-button,
         .icon-button:active {
-          margin-left: 5px;
+          margin-left: 3px;
         }
       `}</style>
     </>

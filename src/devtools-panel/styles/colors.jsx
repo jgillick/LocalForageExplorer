@@ -36,8 +36,9 @@ export default css.global`
     --modal-button-hover-border: #5a5a5a;
     --modal-button-focus-border: #0f639d;
   }
-  @media (prefers-color-scheme: dark) {
-    :root {
+  /* Chrome dark color scheme */
+  @media (prefers-color-scheme: dark)  {
+    :root .chrome-browser {
       --color: #bec6cf;
       --background: #333;
       --border-color: #555;

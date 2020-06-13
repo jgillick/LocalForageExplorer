@@ -85,6 +85,7 @@ export default function({ rows, onChange, removeItem, instanceName, filteredBy }
       // Delete selected row
       case 'Backspace':
       case 'Delete':
+      case 'Del':
         if (row && typeof removeItem === 'function') {
           removeItem(row.key);
         }
@@ -308,7 +309,6 @@ export default function({ rows, onChange, removeItem, instanceName, filteredBy }
           outline: none;
         }
         section :global(.ReactVirtualized__Table__headerRow) {
-          line-height: 20px;
           background: var(--table-header-background);
           border-bottom: 1px solid var(--border-color);
         }

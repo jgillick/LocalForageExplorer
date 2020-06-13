@@ -1,19 +1,20 @@
 {
   "name": "localforage-explorer",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "A chrome extension for viewing/editing localforage data stores.",
   "main": "index.js",
   "scripts": {
     "clean": "rm -rf dist .cache localforage-explorer.zip",
-    "start": "WEB_SERVER=1 parcel src/devtools-panel/panel.html --no-cache",
+    "start": "parcel src/devtools-panel/app.html --no-cache",
     "watch": "parcel watch src/* src/**/* --no-hmr --no-cache",
     "build": "parcel build src/* src/**/* --no-cache --no-source-maps",
-    "dist": "npm run clean && npm run build && zip -r localforage-explorer.zip ./dist"
+    "zip": "npm run clean && npm run build && zip -r localforage-explorer.zip ./dist",
+    "firefox": "npm run build && web-ext run -s dist"
   },
   "author": "Jeremy Gillick",
   "license": "MIT",
   "dependencies": {
-    "crx-bridge": "^2.1.0",
+    "crx-bridge": "^2.2.0",
     "localforage": "^1.7.3",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
@@ -28,7 +29,8 @@
     "@babel/preset-react": "^7.10.1",
     "babel-preset-env": "^1.7.0",
     "parcel-bundler": "^1.12.4",
-    "parcel-plugin-json": "^1.0.1"
+    "parcel-plugin-json": "^1.0.1",
+    "web-ext": "^4.2.0"
   },
   "browserslist": [
     "last 1 Chrome version"
